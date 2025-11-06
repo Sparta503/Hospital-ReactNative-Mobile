@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { Platform, StyleSheet } from 'react-native';
 
 // Import your screen components
 import HomeScreen from '../screens/home/HomeScreen';
@@ -20,47 +21,62 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 export default function AppNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName: keyof typeof Ionicons.glyphMap = 'home';
-
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Appointments') {
-            iconName = focused ? 'calendar' : 'calendar-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'settings' : 'settings-outline';
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: '#2563eb', // Blue color for active tab
+      screenOptions={{
+        tabBarActiveTintColor: '#2563eb',
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
-      })}
+        tabBarStyle: styles.tabBar,
+        tabBarLabelStyle: styles.tabBarLabel,
+      }}
     >
       <Tab.Screen 
         name="Home" 
-        component={HomeScreen} 
-        options={{ title: 'Home' }}
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          ),
+        }}
       />
       <Tab.Screen 
         name="Appointments" 
-        component={AppointmentsScreen} 
-        options={{ title: 'Appointments' }}
+        component={AppointmentsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="calendar" size={size} color={color} />
+          ),
+        }}
       />
       <Tab.Screen 
         name="Profile" 
-        component={ProfileScreen} 
-        options={{ title: 'Profile' }}
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
       />
       <Tab.Screen 
         name="Settings" 
-        component={SettingsScreen} 
-        options={{ title: 'Settings' }}
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings" size={size} color={color} />
+          ),
+        }}
       />
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    paddingTop: Platform.OS === 'ios' ? 5 : 0,
+    height: Platform.OS === 'ios' ? 80 : 60,
+    paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+  },
+  tabBarLabel: {
+    fontSize: 12,
+    marginBottom: Platform.OS === 'ios' ? 0 : 5,
+  },
+});
