@@ -8,6 +8,7 @@
     "userInterfaceStyle": "light",
     "platforms": ["ios", "android", "web"],
     "assetBundlePatterns": ["**/*"],
+    "jsEngine": "hermes",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yourcompany.hospitalapp",
