@@ -2,11 +2,12 @@
   "expo": {
     "name": "HospitalApp",
     "slug": "HospitalApp",
+    "sdkVersion": "54.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "platforms": ["ios", "android", "web"],
+    "platforms": ["ios", "android"],
     "assetBundlePatterns": ["**/*"],
     "jsEngine": "hermes",
     "ios": {
@@ -21,9 +22,6 @@
       },
       "package": "com.yourcompany.hospitalapp",
       "versionCode": 1
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
