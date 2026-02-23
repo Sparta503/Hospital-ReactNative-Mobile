@@ -4,23 +4,23 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function ProfileScreen() {
   const user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 234 567 8900',
+    name: 'Abel Chomunodisa',
+    email: 'Chomunodisaa68@gmail.com',
+    phone: '+263780488779',
     bloodType: 'O+',
     // Add a placeholder image or use a default avatar
     avatar: 'https://via.placeholder.com/150',
   };
 
   const menuItems = [
-    { id: '1', title: 'Medical Records', icon: 'document-text' },
-    { id: '2', title: 'Prescriptions', icon: 'medical' },
-    { id: '3', title: 'Lab Results', icon: 'flask' },
-    { id: '4', title: 'Billing', icon: 'card' },
+    { id: '1', title: 'Medical Records', icon: 'document-text' as const },
+    { id: '2', title: 'Prescriptions', icon: 'medkit' as const },
+    { id: '3', title: 'Lab Results', icon: 'flask' as const },
+    { id: '4', title: 'Billing', icon: 'card' as const },
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingBottom: 100 }]}>
       <View style={styles.profileHeader}>
         <Image 
           source={{ uri: user.avatar }} 
@@ -59,29 +59,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    padding: 16,
   },
+  
   profileHeader: {
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f8f9fa',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    paddingTop: 2,
+    paddingHorizontal: 5,
+    paddingBottom: 10,
+    backgroundColor: '#2563eb',
+    borderRadius: 12,
+    marginBottom: 24,
   },
   avatar: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 10,
     borderRadius: 50,
-    marginBottom: 12,
+    marginBottom: 8,
   },
   name: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 4,
+    marginBottom: 2,
+    color: '#fff',
   },
   email: {
     fontSize: 14,
-    color: '#666',
-    marginBottom: 16,
+    color: '#fff',
+    marginBottom: 10,
   },
   infoContainer: {
     flexDirection: 'row',
@@ -94,20 +99,25 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 12,
-    color: '#666',
+    color: '#fff',
     marginBottom: 4,
   },
   infoValue: {
     fontSize: 16,
     fontWeight: '600',
+    color: '#fff',
   },
   menuContainer: {
-    padding: 16,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    overflow: 'hidden',
   },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingVertical: 16,
+    paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
