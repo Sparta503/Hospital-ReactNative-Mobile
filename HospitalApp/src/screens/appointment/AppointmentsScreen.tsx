@@ -24,7 +24,7 @@ export default function AppointmentsScreen() {
   const renderAppointment = ({ item }: { item: Appointment }) => (
     <View style={styles.appointmentCard}>
       <Text style={styles.doctorName}>{item.doctor}</Text>
-      <Text>{item.date} at {item.time}</Text>
+      <Text style={styles.appointmentText}>{item.date} at {item.time}</Text>
       <Text style={[
         styles.status,
         item.status === 'upcoming' ? styles.upcoming : 
@@ -63,34 +63,40 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   appointmentCard: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#2563eb',
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 16,
     marginBottom: 12,
   },
   doctorName: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#fff',
+  },
+  appointmentText: {
+    fontSize: 14,
+    color: '#fff',
+    opacity: 0.9,
+    marginBottom: 8,
   },
   status: {
     marginTop: 8,
-    padding: 4,
-    borderRadius: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 8,
     alignSelf: 'flex-start',
     fontSize: 12,
     fontWeight: '500',
+    color: '#fff',
   },
   upcoming: {
-    backgroundColor: '#e3f2fd',
-    color: '#1976d2',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   completed: {
-    backgroundColor: '#e8f5e9',
-    color: '#388e3c',
+    backgroundColor: 'rgba(144, 238, 144, 0.3)',
   },
   cancelled: {
-    backgroundColor: '#ffebee',
-    color: '#d32f2f',
+    backgroundColor: 'rgba(255, 99, 71, 0.3)',
   },
 });
