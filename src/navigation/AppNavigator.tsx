@@ -127,6 +127,7 @@ const LivingTabBar = ({ children }: { children: React.ReactNode }) => {
           transform: [{ scale: breatheAnim }],
         },
       ]}>
+      <View style={styles.tabBarGlass} />
       {children}
     </Animated.View>
   );
