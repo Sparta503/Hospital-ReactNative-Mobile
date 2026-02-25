@@ -133,6 +133,80 @@ const LivingChevron = () => {
   );
 };
 
+// Living Profile Icons Component
+const LivingProfileIcons = () => {
+  const personIconAnim = useRef(new Animated.Value(1)).current;
+  const phoneIconAnim = useRef(new Animated.Value(1)).current;
+  const personOpacityAnim = useRef(new Animated.Value(1)).current;
+  const phoneOpacityAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    // Person icon animations
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(personIconAnim, {
+          toValue: 1.1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(personIconAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(personOpacityAnim, {
+          toValue: 0.7,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(personOpacityAnim, {
+          toValue: 1,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    // Phone icon animations
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(phoneIconAnim, {
+          toValue: 1.1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(phoneIconAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(phoneOpacityAnim, {
+          toValue: 0.7,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(phoneOpacityAnim, {
+          toValue: 1,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [personIconAnim, personOpacityAnim, phoneIconAnim, phoneOpacityAnim]);
+
+  return { personIconAnim, phoneIconAnim, personOpacityAnim, phoneOpacityAnim };
+};
+
 export default function ProfileScreen() {
   const user = {
     name: 'Abel Chomunodisa',
@@ -142,6 +216,8 @@ export default function ProfileScreen() {
     // Add a placeholder image or use a default avatar
     avatar: 'https://via.placeholder.com/150',
   };
+
+  const { personIconAnim, phoneIconAnim, personOpacityAnim, phoneOpacityAnim } = LivingProfileIcons();
 
   const menuItems = [
     { id: '1', title: 'Medical Records', icon: 'document-text' as const },
@@ -153,20 +229,45 @@ export default function ProfileScreen() {
   return (
     <View style={[styles.container, { paddingBottom: 100 }]}>
       <View style={styles.profileHeader}>
-        <Image 
-          source={{ uri: user.avatar }} 
-          style={styles.avatar}
-        />
-        <Text style={styles.name}>{user.name}</Text>
-        <Text style={styles.email}>{user.email}</Text>
-        <View style={styles.infoContainer}>
-          <View style={styles.infoItem}>
-            <Text style={styles.infoLabel}>Phone</Text>
-            <Text style={styles.infoValue}>{user.phone}</Text>
-          </View>
-          <View style={styles.infoItem}>
-            <Text style={styles.infoLabel}>Blood Type</Text>
-            <Text style={styles.infoValue}>{user.bloodType}</Text>
+        <View style={styles.headerRow}>
+          <Image 
+            source={{ uri: user.avatar }} 
+            style={styles.avatar}
+          />
+          <View style={styles.userInfo}>
+            <View style={styles.nameContainer}>
+              <Animated.View
+                style={[
+                  {
+                    transform: [{ scale: personIconAnim }],
+                    opacity: personOpacityAnim,
+                  },
+                ]}>
+                <Ionicons name="person" size={24} color="#fff" />
+              </Animated.View>
+              <Text style={styles.name}>{user.name}</Text>
+            </View>
+            <Text style={styles.email}>{user.email}</Text>
+            <View style={styles.infoContainer}>
+              <View style={styles.infoItem}>
+                <View style={styles.infoValueContainer}>
+                  <Animated.View
+                    style={[
+                      {
+                        transform: [{ scale: phoneIconAnim }],
+                        opacity: phoneOpacityAnim,
+                      },
+                    ]}>
+                    <Ionicons name="call" size={16} color="#fff" />
+                  </Animated.View>
+                  <Text style={styles.infoValue}>{user.phone}</Text>
+                </View>
+              </View>
+              <View style={styles.infoItem}>
+                <Text style={styles.infoLabel}>Blood Type</Text>
+                <Text style={styles.infoValue}>{user.bloodType}</Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -188,25 +289,42 @@ const styles = StyleSheet.create({
   },
   
   profileHeader: {
-    alignItems: 'center',
+    alignItems: 'flex-start', // Changed to flex-start for top alignment
     paddingTop: 2,
-    paddingHorizontal: 5,
-    paddingBottom: 10,
+    paddingHorizontal: 1,
+    paddingBottom: 3,
     backgroundColor: '#2563eb',
     borderRadius: 12,
     marginBottom: 24,
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    width: '100%',
+  },
+  userInfo: {
+    flex: 1,
+    marginLeft: 12,
+  },
   avatar: {
-    width: 50,
-    height: 10,
-    borderRadius: 50,
-    marginBottom: 8,
+    width: 60, // Reduced size for horizontal layout
+    height: 60, // Reduced size for horizontal layout
+    borderRadius: 30,
+  },
+  nameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+    marginTop: 20, // Add slight downward positioning
+  },
+  nameIcon: {
+    marginRight: 8,
   },
   name: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 2,
     color: '#fff',
+    textAlign: 'center', // Center the name text
   },
   email: {
     fontSize: 14,
@@ -215,12 +333,19 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start', // Changed to flex-start for better alignment
     width: '100%',
     marginTop: 10,
   },
   infoItem: {
+    marginRight: 20, // Add spacing between items
+  },
+  infoValueContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+  },
+  infoIcon: {
+    marginRight: 6,
   },
   infoLabel: {
     fontSize: 12,
