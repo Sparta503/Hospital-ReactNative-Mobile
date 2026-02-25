@@ -7,14 +7,21 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "platforms": ["ios", "android"],
+    "platforms": ["ios", "android", "web"],
     "assetBundlePatterns": ["**/*"],
     "jsEngine": "hermes",
+
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yourcompany.hospitalapp",
       "buildNumber": "1.0.0"
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -23,6 +30,7 @@
       "package": "com.yourcompany.hospitalapp",
       "versionCode": 1
     },
+
     "extra": {
       "eas": {
         "projectId": "your-project-id"
