@@ -44,7 +44,7 @@ const LivingMenuItem = ({ item }: { item: any }) => {
 
   const handlePressIn = () => {
     Animated.spring(pressScaleAnim, {
-      toValue: 3,
+      toValue: 0.95,
       useNativeDriver: true,
     }).start();
   };
