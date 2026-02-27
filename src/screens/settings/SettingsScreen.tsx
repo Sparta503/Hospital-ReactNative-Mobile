@@ -260,9 +260,6 @@ const SettingsScreen = () => {
           <LivingSettingItem key={item.id} item={item} />
         ))}
       </View>
-      <View style={styles.versionContainer}>
-        <Text style={styles.versionText}>Version 1.0.0</Text>
-      </View>
     </View>
   );
 };
