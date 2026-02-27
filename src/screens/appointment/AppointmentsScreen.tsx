@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Animated } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 type Appointment = {
   id: string;
@@ -7,6 +8,86 @@ type Appointment = {
   date: string;
   time: string;
   status: 'upcoming' | 'completed' | 'cancelled';
+};
+
+const AppointmentCard = ({ item }: { item: Appointment }) => {
+  const opacityAnim = useRef(new Animated.Value(0.9)).current;
+  const iconScaleAnim = useRef(new Animated.Value(1)).current;
+  const iconOpacityAnim = useRef(new Animated.Value(0.8)).current;
+
+  useEffect(() => {
+    // Opacity pulsing
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacityAnim, {
+          toValue: 1,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacityAnim, {
+          toValue: 0.9,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    // Icon scale breathing
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(iconScaleAnim, {
+          toValue: 1.1,
+          duration: 1800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(iconScaleAnim, {
+          toValue: 1,
+          duration: 1800,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    // Icon opacity pulsing
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(iconOpacityAnim, {
+          toValue: 1,
+          duration: 1600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(iconOpacityAnim, {
+          toValue: 0.8,
+          duration: 1600,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [opacityAnim, iconScaleAnim, iconOpacityAnim]);
+
+  return (
+    <Animated.View style={[styles.appointmentCard, { opacity: opacityAnim }]}>
+      <View style={styles.cardHeader}>
+        <Animated.View style={{ transform: [{ scale: iconScaleAnim }], opacity: iconOpacityAnim }}>
+          <Ionicons name="calendar" size={24} color="#fff" />
+        </Animated.View>
+        <View style={styles.cardContent}>
+          <Text style={styles.doctorName}>{item.doctor}</Text>
+          <Text style={styles.appointmentText}>{item.date} at {item.time}</Text>
+        </View>
+        <Animated.View style={{ transform: [{ scale: iconScaleAnim }], opacity: iconOpacityAnim }}>
+          <Ionicons name="medkit" size={20} color="#fff" />
+        </Animated.View>
+      </View>
+      <Text style={[
+        styles.status,
+        item.status === 'upcoming' ? styles.upcoming : 
+        item.status === 'completed' ? styles.completed : styles.cancelled
+      ]}>
+        {item.status}
+      </Text>
+    </Animated.View>
+  );
 };
 
 export default function AppointmentsScreen() {
@@ -18,31 +99,113 @@ export default function AppointmentsScreen() {
       time: '10:00 AM',
       status: 'upcoming',
     },
+    {
+      id: '2',
+      doctor: 'Dr. Johnson',
+      date: '2023-11-10',
+      time: '2:00 PM',
+      status: 'completed',
+    },
+    {
+      id: '3',
+      doctor: 'Dr. Lee',
+      date: '2023-11-05',
+      time: '9:00 AM',
+      status: 'cancelled',
+    },
     // Add more sample appointments as needed
   ];
 
-  const renderAppointment = ({ item }: { item: Appointment }) => (
-    <View style={styles.appointmentCard}>
-      <Text style={styles.doctorName}>{item.doctor}</Text>
-      <Text style={styles.appointmentText}>{item.date} at {item.time}</Text>
-      <Text style={[
-        styles.status,
-        item.status === 'upcoming' ? styles.upcoming : 
-        item.status === 'completed' ? styles.completed : styles.cancelled
-      ]}>
-        {item.status}
-      </Text>
-    </View>
-  );
+  const emergencyIconAnim = useRef(new Animated.Value(1)).current;
+  const emergencyButtonAnim = useRef(new Animated.Value(0.95)).current;
+  const emergencyPressAnim = useRef(new Animated.Value(1)).current;
+  const titleAnim = useRef(new Animated.Value(1)).current;
+
+  const handleEmergencyPressIn = () => {
+    Animated.spring(emergencyPressAnim, { toValue: 0.9, useNativeDriver: true }).start();
+  };
+
+  const handleEmergencyPressOut = () => {
+    Animated.spring(emergencyPressAnim, { toValue: 1, friction: 3, tension: 40, useNativeDriver: true }).start();
+  };
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(emergencyIconAnim, {
+          toValue: 1.15,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(emergencyIconAnim, {
+          toValue: 1,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(emergencyButtonAnim, {
+          toValue: 1,
+          duration: 1400,
+          useNativeDriver: true,
+        }),
+        Animated.timing(emergencyButtonAnim, {
+          toValue: 0.95,
+          duration: 1400,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(titleAnim, {
+          toValue: 1.1,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(titleAnim, {
+          toValue: 1,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [emergencyIconAnim, emergencyButtonAnim, titleAnim]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>My Appointments</Text>
+      <View style={styles.titleContainer}>
+        <Animated.View style={{ transform: [{ scale: titleAnim }] }}>
+          <Ionicons name="calendar" size={24} color="#2563eb" />
+        </Animated.View>
+        <Text style={styles.title}>My Appointments</Text>
+      </View>
       <FlatList
         data={appointments}
-        renderItem={renderAppointment}
+        renderItem={({ item }) => <AppointmentCard item={item} />}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
+        ListFooterComponent={() => (
+          <Animated.View style={{ opacity: emergencyButtonAnim }}>
+            <Animated.View style={{ transform: [{ scale: emergencyPressAnim }] }}>
+              <TouchableOpacity
+                style={styles.emergencyButton}
+                activeOpacity={0.8}
+                onPressIn={handleEmergencyPressIn}
+                onPressOut={handleEmergencyPressOut}
+              >
+                <Animated.View style={{ transform: [{ scale: emergencyIconAnim }] }}>
+                  <Ionicons name="call" size={18} color="#fff" />
+                </Animated.View>
+                <Text style={styles.emergencyText}>Emergency</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          </Animated.View>
+        )}
       />
     </View>
   );
@@ -57,6 +220,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#2563eb',
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 20,
   },
   list: {
@@ -64,9 +232,25 @@ const styles = StyleSheet.create({
   },
   appointmentCard: {
     backgroundColor: '#2563eb',
-    padding: 16,
-    borderRadius: 16,
+    borderRadius: 24,
+    padding: 10,
     marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0,
+    shadowRadius: 12,
+    elevation: 6,
+    borderWidth: 4,
+    borderColor: '#2563eb',
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  cardContent: {
+    flex: 1,
+    marginLeft: 12,
   },
   doctorName: {
     fontSize: 18,
@@ -81,7 +265,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   status: {
-    marginTop: 8,
     paddingVertical: 4,
     paddingHorizontal: 8,
     borderRadius: 8,
@@ -91,12 +274,34 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   upcoming: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: '#007bff',
   },
   completed: {
-    backgroundColor: 'rgba(144, 238, 144, 0.3)',
+    backgroundColor: '#17a2b8',
   },
   cancelled: {
-    backgroundColor: 'rgba(255, 99, 71, 0.3)',
+    backgroundColor: '#dc3545',
+  },
+  emergencyButton: {
+    backgroundColor: '#dc3545',
+    borderRadius: 8,
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+    width: '80%',
+    alignSelf: 'center',
+  },
+  emergencyText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginLeft: 6,
   },
 });
