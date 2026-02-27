@@ -205,15 +205,17 @@ const styles = StyleSheet.create({
   tabBarGlass: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#2563eb',
+    backgroundColor: 'rgba(37, 99, 235, 0.85)', // Semi-transparent blue
     borderRadius: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 15,
-    elevation: 8,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.7,
+    shadowRadius: 20,
+    elevation: 12,
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 0.25)', // Glassy border
+    // Additional glassmorphism effects
+    backdropFilter: 'blur(20px)', // Note: This may not work in React Native
   },
   iconButton: {
     justifyContent: 'center',
@@ -222,11 +224,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   iconButtonFocused: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)', // More transparent for glass effect
     shadowColor: '#fff',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)', // Glassy border for focused state
   },
 });
