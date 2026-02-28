@@ -212,7 +212,6 @@ export default function ProfileScreen() {
     name: 'Abel Chomunodisa',
     email: 'Chomunodisaa68@gmail.com',
     phone: '+263780488779',
-    bloodType: 'O+',
     // Add a placeholder image or use a default avatar
     avatar: 'https://via.placeholder.com/150',
   };
@@ -262,10 +261,6 @@ export default function ProfileScreen() {
                   </Animated.View>
                   <Text style={styles.infoValue}>{user.phone}</Text>
                 </View>
-              </View>
-              <View style={styles.infoItem}>
-                <Text style={styles.infoLabel}>Blood Type</Text>
-                <Text style={styles.infoValue}>{user.bloodType}</Text>
               </View>
             </View>
           </View>
