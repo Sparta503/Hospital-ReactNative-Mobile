@@ -98,8 +98,9 @@ const LivingTabIcon = ({ name, focused, color, size }: {
 };
 
 // Living Navigation Bar Component
-const LivingTabBar = ({ children }: { children: React.ReactNode }) => {
+const LivingTabBar = () => {
   const breatheAnim = useRef(new Animated.Value(1)).current;
+  const starAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     // Gentle breathing animation for the entire navigation bar
@@ -117,7 +118,23 @@ const LivingTabBar = ({ children }: { children: React.ReactNode }) => {
         }),
       ])
     ).start();
-  }, [breatheAnim]);
+
+    // Twinkling animation for the decorative star
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(starAnim, {
+          toValue: 1.3,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(starAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [breatheAnim, starAnim]);
 
   return (
     <Animated.View
@@ -127,7 +144,10 @@ const LivingTabBar = ({ children }: { children: React.ReactNode }) => {
           transform: [{ scale: breatheAnim }],
         },
       ]}>
-      {children}
+      <View style={styles.tabBarGlass} />
+      <Animated.View style={[styles.decorativeIcon, { transform: [{ scale: starAnim }] }]}>
+        <Ionicons name="star" size={16} color="#fff" />
+      </Animated.View>
     </Animated.View>
   );
 };
@@ -143,11 +163,7 @@ export default function AppNavigator() {
         headerShown: false,
         tabBarStyle: styles.tabBar,
         tabBarShowLabel: false,
-        tabBarBackground: () => (
-          <LivingTabBar>
-            <View style={styles.tabBarGlass} />
-          </LivingTabBar>
-        ),
+        tabBarBackground: LivingTabBar,
       }}
     >
       <Tab.Screen 
