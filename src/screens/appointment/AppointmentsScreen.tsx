@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Animated, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 type Appointment = {
@@ -197,6 +197,7 @@ export default function AppointmentsScreen() {
                 activeOpacity={0.8}
                 onPressIn={handleEmergencyPressIn}
                 onPressOut={handleEmergencyPressOut}
+                onPress={() => Linking.openURL('tel:911')}
               >
                 <Animated.View style={{ transform: [{ scale: emergencyIconAnim }] }}>
                   <Ionicons name="call" size={18} color="#fff" />
