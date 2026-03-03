@@ -1,6 +1,8 @@
-import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import React, { useRef, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import BookAppointment from './BookAppoint';
+import FindDoctor from './FindDoctor';
 
 const UserDataCard = ({ icon, title, value }: { icon: string; title: string; value: string }) => {
   const opacityAnim = useRef(new Animated.Value(0.9)).current;
@@ -114,6 +116,8 @@ const QuickAction = ({ icon, title, onPress }: { icon: string; title: string; on
 };
 
 export default function HomeScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [findDoctorModalVisible, setFindDoctorModalVisible] = useState(false);
   const userData = [
     { icon: 'heart', title: 'Heart Rate', value: '72 bpm' },
     { icon: 'calendar', title: 'Next Appt', value: 'Mar 1, 2PM' },
@@ -139,39 +143,47 @@ export default function HomeScreen() {
   });
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.header}>
-        <Ionicons name="person-circle" size={45} color="#2563eb" />
-        <View style={styles.headerText}>
-          <View style={styles.greetingRow}>
-            <Text style={styles.greeting}>Welcome, Abel</Text>
-            <Animated.View style={{ transform: [{ rotate: spin }] }}>
-              <Ionicons name="refresh" size={20} color="#fff" />
-            </Animated.View>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Ionicons name="person-circle" size={45} color="#2563eb" />
+          <View style={styles.headerText}>
+            <View style={styles.greetingRow}>
+              <Text style={styles.greeting}>Welcome, Abel</Text>
+              <Animated.View style={{ transform: [{ rotate: spin }] }}>
+                <Ionicons name="refresh" size={20} color="#fff" />
+              </Animated.View>
+            </View>
+            <Text style={styles.subtitle}>Your health dashboard</Text>
           </View>
-          <Text style={styles.subtitle}>Your health dashboard</Text>
         </View>
-      </View>
 
-      <View style={styles.dataGrid}>
-        {userData.map((data, index) => (
-          <UserDataCard
-            key={index}
-            icon={data.icon}
-            title={data.title}
-            value={data.value}
-          />
-        ))}
-      </View>
-
-      <View style={styles.actionsSection}>
-        <Text style={styles.sectionTitle}>Quick Actions</Text>
-        <View style={styles.actionsRow}>
-          <QuickAction icon="calendar-outline" title="Book Appointment" onPress={() => {}} />
-          <QuickAction icon="medical-outline" title="Find Doctor" onPress={() => {}} />
+        <View style={styles.dataGrid}>
+          {userData.map((data, index) => (
+            <UserDataCard
+              key={index}
+              icon={data.icon}
+              title={data.title}
+              value={data.value}
+            />
+          ))}
         </View>
-      </View>
-    </ScrollView>
+
+        <View style={styles.actionsSection}>
+          <Text style={styles.sectionTitle}>Quick Actions</Text>
+          <View style={styles.actionsRow}>
+            <QuickAction icon="calendar-outline" title="Book Appointment" onPress={() => setModalVisible(true)} />
+            <QuickAction icon="medical-outline" title="Find Doctor" onPress={() => setFindDoctorModalVisible(true)} />
+          </View>
+        </View>
+      </ScrollView>
+      <Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
+        <BookAppointment navigation={{ goBack: () => setModalVisible(false) }} />
+      </Modal>
+      <Modal visible={findDoctorModalVisible} animationType="slide" onRequestClose={() => setFindDoctorModalVisible(false)}>
+        <FindDoctor navigation={{ goBack: () => setFindDoctorModalVisible(false) }} />
+      </Modal>
+    </View>
   );
 }
 
