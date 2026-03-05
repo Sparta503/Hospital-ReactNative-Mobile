@@ -232,17 +232,12 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   appointmentCard: {
-    backgroundColor: '#2563eb',
+    backgroundColor: 'rgba(108, 117, 125, 0.8)', // Glassy grey background
     borderRadius: 24,
     padding: 10,
     marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0,
-    shadowRadius: 12,
-    elevation: 6,
-    borderWidth: 4,
-    borderColor: '#2563eb',
+    borderWidth: 2,
+    borderColor: 'rgba(108, 117, 125, 0.3)', // Glassy grey border
   },
   cardHeader: {
     flexDirection: 'row',
