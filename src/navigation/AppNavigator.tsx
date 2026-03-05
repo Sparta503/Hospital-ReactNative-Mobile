@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
-import { 
-  Platform, 
-  StyleSheet, 
+import {
+  Platform,
+  StyleSheet,
   View,
   Animated,
 } from 'react-native';
@@ -13,12 +14,18 @@ import HomeScreen from '../screens/home/HomeScreen';
 import AppointmentsScreen from '../screens/appointment/AppointmentsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
+import SignIn from '../components/shared/SignIn';
 
 export type RootTabParamList = {
   Home: undefined;
   Appointments: undefined;
   Profile: undefined;
   Settings: undefined;
+};
+
+export type RootStackParamList = {
+  SignIn: undefined;
+  MainApp: undefined;
 };
 
 // Living Tab Icon with animations
@@ -91,7 +98,7 @@ const LivingTabIcon = ({ name, focused, color, size }: {
       <Ionicons 
         name={name as any} 
         size={size} 
-        color='white'
+        color='#6c757d'
       />
     </Animated.View>
   );
@@ -145,16 +152,14 @@ const LivingTabBar = () => {
         },
       ]}>
       <View style={styles.tabBarGlass} />
-      <Animated.View style={[styles.decorativeIcon, { transform: [{ scale: starAnim }] }]}>
-        <Ionicons name="star" size={16} color="#fff" />
-      </Animated.View>
     </Animated.View>
   );
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-export default function AppNavigator() {
+// Main Tab Navigator Component
+const MainTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -166,8 +171,8 @@ export default function AppNavigator() {
         tabBarBackground: LivingTabBar,
       }}
     >
-      <Tab.Screen 
-        name="Home" 
+      <Tab.Screen
+        name="Home"
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -175,8 +180,8 @@ export default function AppNavigator() {
           ),
         }}
       />
-      <Tab.Screen 
-        name="Appointments" 
+      <Tab.Screen
+        name="Appointments"
         component={AppointmentsScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -184,8 +189,8 @@ export default function AppNavigator() {
           ),
         }}
       />
-      <Tab.Screen 
-        name="Profile" 
+      <Tab.Screen
+        name="Profile"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -193,8 +198,8 @@ export default function AppNavigator() {
           ),
         }}
       />
-      <Tab.Screen 
-        name="Settings" 
+      <Tab.Screen
+        name="Settings"
         component={SettingsScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -203,6 +208,22 @@ export default function AppNavigator() {
         }}
       />
     </Tab.Navigator>
+  );
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+export default function AppNavigator() {
+  return (
+    <Stack.Navigator
+      initialRouteName="SignIn"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="MainApp" component={MainTabNavigator} />
+    </Stack.Navigator>
   );
 }
 
@@ -221,17 +242,16 @@ const styles = StyleSheet.create({
   tabBarGlass: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(37, 99, 235, 0.85)', // Semi-transparent blue
+    backgroundColor: 'rgba(255, 255, 255, 0.55)', // White with optimal opacity for perfect glassmorphism visibility
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.7,
-    shadowRadius: 20,
+    shadowColor: '#2563eb', // Blue glow color
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
     elevation: 12,
-    borderWidth: 1.5,
-    borderColor: 'rgba(255, 255, 255, 0.25)', // Glassy border
-    // Additional glassmorphism effects
-    backdropFilter: 'blur(20px)', // Note: This may not work in React Native
+    borderWidth: 2,
+    borderColor: 'rgba(108, 117, 125, 0.3)', // Grey border
+    // Additional blue glow effects
   },
   iconButton: {
     justifyContent: 'center',
