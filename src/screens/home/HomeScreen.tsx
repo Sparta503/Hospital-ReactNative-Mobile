@@ -5,49 +5,36 @@ import BookAppointment from './BookAppoint';
 import FindDoctor from './FindDoctor';
 
 const UserDataCard = ({ icon, title, value }: { icon: string; title: string; value: string }) => {
-  const opacityAnim = useRef(new Animated.Value(0.9)).current;
-  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const blinkAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    // Opacity pulsing
+    // Text blinking
     Animated.loop(
       Animated.sequence([
-        Animated.timing(opacityAnim, {
-          toValue: 1,
-          duration: 1500,
+        Animated.timing(blinkAnim, {
+          toValue: 0.3,
+          duration: 800,
           useNativeDriver: true,
         }),
-        Animated.timing(opacityAnim, {
-          toValue: 0.9,
-          duration: 1500,
+        Animated.timing(blinkAnim, {
+          toValue: 1,
+          duration: 800,
           useNativeDriver: true,
         }),
       ])
     ).start();
-
-    // Scale breathing
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(scaleAnim, {
-          toValue: 1.05,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(scaleAnim, {
-          toValue: 1,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
-  }, [opacityAnim, scaleAnim]);
+  }, [blinkAnim]);
 
   return (
-    <Animated.View style={[styles.dataCard, { opacity: opacityAnim, transform: [{ scale: scaleAnim }] }]}>
-      <Ionicons name={icon as any} size={24} color="#2563eb" />
-      <Text style={styles.dataTitle}>{title}</Text>
-      <Text style={styles.dataValue}>{value}</Text>
-    </Animated.View>
+    <View style={styles.dataCard}>
+      <View style={styles.iconContainer}>
+        <Ionicons name={icon as any} size={24} color="#2563eb" />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.dataTitle}>{title}</Text>
+        <Animated.Text style={[styles.dataValue, { opacity: blinkAnim }]}>{value}</Animated.Text>
+      </View>
+    </View>
   );
 };
 
@@ -198,15 +185,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
     padding: 12,
-    backgroundColor: '#2563eb',
+    backgroundColor: 'rgba(108, 117, 125, 0.8)', // Glassy grey background
     borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 6,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.25)',
+    borderColor: 'rgba(108, 117, 125, 0.3)', // Glassy grey border
   },
   headerText: {
     marginLeft: 16,
@@ -233,19 +215,25 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   dataCard: {
-    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+    backgroundColor: 'rgba(108, 117, 125, 0.8)', // Glassy grey background
     borderRadius: 18,
     padding: 8,
     alignItems: 'center',
     width: '48%',
     marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
-    elevation: 8,
-    borderWidth: 4,
-    borderColor: '#2563eb',
+    borderWidth: 2,
+    borderColor: 'rgba(108, 117, 125, 0.3)', // Glassy grey border
+  },
+  iconContainer: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20, // Padding to account for icon space
   },
   dataTitle: {
     fontSize: 8,
@@ -273,16 +261,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   quickAction: {
-    backgroundColor: '#2563eb',
-    borderRadius: 16,
-    padding: 12,
+    backgroundColor: 'rgba(108, 117, 125, 0.8)', // Glassy grey background
+    borderRadius: 20, // Increased border radius for bigger appearance
+    padding: 16, // Increased padding for bigger buttons
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    marginBottom: 12,
-    borderWidth: 2,
-    borderColor: '#2563eb',
+    marginBottom: 14, // Increased margin for better spacing
+    borderWidth: 1,
+    borderColor: 'rgba(108, 117, 125, 0.3)', // Glassy grey border
   },
   quickActionText: {
     fontSize: 10,
