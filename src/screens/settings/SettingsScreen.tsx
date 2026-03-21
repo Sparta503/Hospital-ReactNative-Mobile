@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/AppNavigator';
+import SignOut from '../../components/shared/SignOut';
+import AboutScreen from './About';
 
 // Living Setting Item Component
 const LivingSettingItem = ({ item }: { item: any }) => {
@@ -69,7 +74,7 @@ const LivingSettingItem = ({ item }: { item: any }) => {
         key={item.id}
         style={[
           styles.settingItem,
-          (item.id === '1' || item.id === '2' || item.id === '3' || item.id === '4' || item.id === '5' || item.id === '6') && styles.notificationsItem, // Apply special styling to all items
+          (item.id === '1' || item.id === '4' || item.id === '5' || item.id === '6' || item.id === '7') && styles.notificationsItem, // Apply special styling to all items
         ]}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
@@ -79,7 +84,7 @@ const LivingSettingItem = ({ item }: { item: any }) => {
         <View style={styles.settingLeft}>
           <Animated.View
             style={[
-              (item.id === '1' || item.id === '2' || item.id === '3' || item.id === '4' || item.id === '5' || item.id === '6') ? styles.settingIconContainer : styles.settingIcon, // Different icon styling
+              (item.id === '1' || item.id === '4' || item.id === '5' || item.id === '6' || item.id === '7') ? styles.settingIconContainer : styles.settingIcon, // Different icon styling
               {
                 transform: [{ scale: iconScaleAnim }],
               },
@@ -87,13 +92,13 @@ const LivingSettingItem = ({ item }: { item: any }) => {
             <Ionicons
               name={item.icon as any}
               size={24}
-              color={(item.id === '1' || item.id === '2' || item.id === '3' || item.id === '4' || item.id === '5' || item.id === '6') ? "#fff" : "#2563eb"} // White for all items with backgrounds, blue for others
+              color={(item.id === '1' || item.id === '4' || item.id === '5' || item.id === '6' || item.id === '7') ? "#fff" : "#2563eb"} // White for all items with backgrounds, blue for others
             />
           </Animated.View>
           <Animated.Text
             style={[
               styles.settingText,
-              (item.id === '1' || item.id === '2' || item.id === '3' || item.id === '4' || item.id === '5' || item.id === '6') && styles.notificationsText, // White text for all items with backgrounds
+              (item.id === '1' || item.id === '4' || item.id === '5' || item.id === '6' || item.id === '7') && styles.notificationsText, // White text for all items with backgrounds
               {
                 opacity: textOpacityAnim,
               },
@@ -155,8 +160,10 @@ const LivingChevron = () => {
 
 const SettingsScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
-  const [darkMode, setDarkMode] = React.useState(false);
-  const [biometricAuth, setBiometricAuth] = React.useState(false);
+  const [showSignOutModal, setShowSignOutModal] = React.useState(false);
+  const [showAboutModal, setShowAboutModal] = React.useState(false);
+
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   // Settings icon animations
   const settingsIconScaleAnim = useRef(new Animated.Value(1)).current;
@@ -206,22 +213,6 @@ const SettingsScreen = () => {
       onValueChange: setNotificationsEnabled,
     },
     {
-      id: '2',
-      title: 'Dark Mode',
-      icon: 'moon',
-      type: 'toggle',
-      value: darkMode,
-      onValueChange: setDarkMode,
-    },
-    {
-      id: '3',
-      title: 'Biometric Authentication',
-      icon: 'finger-print',
-      type: 'toggle',
-      value: biometricAuth,
-      onValueChange: setBiometricAuth,
-    },
-    {
       id: '4',
       title: 'Account Settings',
       icon: 'person',
@@ -238,6 +229,14 @@ const SettingsScreen = () => {
       title: 'About',
       icon: 'information-circle',
       type: 'navigate',
+      onPress: () => setShowAboutModal(true),
+    },
+    {
+      id: '7',
+      title: 'Logout',
+      icon: 'log-out',
+      type: 'navigate',
+      onPress: () => setShowSignOutModal(true),
     },
   ];
 
@@ -260,6 +259,15 @@ const SettingsScreen = () => {
           <LivingSettingItem key={item.id} item={item} />
         ))}
       </View>
+      <SignOut
+        visible={showSignOutModal}
+        onCancel={() => setShowSignOutModal(false)}
+        onConfirm={() => {
+          setShowSignOutModal(false);
+          navigation.reset({ index: 0, routes: [{ name: 'SignIn' }] });
+        }}
+      />
+      <AboutScreen visible={showAboutModal} onClose={() => setShowAboutModal(false)} />
     </View>
   );
 };
