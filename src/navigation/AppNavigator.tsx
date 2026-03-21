@@ -98,7 +98,7 @@ const LivingTabIcon = ({ name, focused, color, size }: {
       <Ionicons 
         name={name as any} 
         size={size} 
-        color='#6c757d'
+        color='#2563eb'
       />
     </Animated.View>
   );
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     elevation: 12,
     borderWidth: 2,
-    borderColor: 'rgba(108, 117, 125, 0.3)', // Grey border
+    borderColor: 'rgba(3, 65, 200, 0.3)', // Blue border
     // Additional blue glow effects
   },
   iconButton: {
