@@ -232,12 +232,12 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   appointmentCard: {
-    backgroundColor: 'rgba(108, 117, 125, 0.8)', // Glassy grey background
+    backgroundColor: 'rgba(3, 65, 200, 0.9)', // Darker blue background
     borderRadius: 24,
     padding: 10,
     marginBottom: 12,
     borderWidth: 2,
-    borderColor: 'rgba(108, 117, 125, 0.3)', // Glassy grey border
+    borderColor: 'rgba(3, 65, 200, 0.3)', // Darker blue border
   },
   cardHeader: {
     flexDirection: 'row',
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#dc3545',
   },
   emergencyButton: {
-    backgroundColor: '#dc3545',
+    backgroundColor: 'rgba(3, 65, 200, 0.9)', // Darker blue background
     borderRadius: 8,
     padding: 12,
     flexDirection: 'row',
@@ -290,9 +290,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 4,
-    width: '80%',
-    alignSelf: 'center',
+    elevation: 5,
   },
   emergencyText: {
     color: '#fff',
