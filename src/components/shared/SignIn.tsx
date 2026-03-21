@@ -12,6 +12,7 @@ import {
   Animated,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface SignInProps {
   navigation: any;
@@ -97,7 +98,10 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
         </View>
 
         {/* Sign In Form */}
-        <View style={styles.formContainer}>
+        <LinearGradient
+          colors={['rgba(3, 65, 200, 0.9)', 'rgba(59, 130, 246, 0.7)']}
+          style={styles.formContainer}
+        >
           <Text style={styles.formTitle}>Sign In</Text>
 
           {/* Email Input */}
@@ -155,7 +159,7 @@ const SignIn: React.FC<SignInProps> = ({ navigation }) => {
               <Text style={styles.optionText}>Create Account</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </LinearGradient>
 
         {/* Footer */}
         <View style={styles.footer}>
@@ -185,13 +189,12 @@ const styles = StyleSheet.create({
   logoContainer: {
     width: 120,
     height: 120,
-    backgroundColor: 'rgba(108, 117, 125, 0.8)',
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
     borderWidth: 2,
-    borderColor: 'rgba(108, 117, 125, 0.3)',
+    borderColor: 'rgba(3, 65, 200, 0.3)',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -217,12 +220,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   formContainer: {
-    backgroundColor: 'rgba(108, 117, 125, 0.8)',
     borderRadius: 20,
     padding: 24,
     marginBottom: 30,
     borderWidth: 1,
-    borderColor: 'rgba(108, 117, 125, 0.3)',
+    borderColor: 'red',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
