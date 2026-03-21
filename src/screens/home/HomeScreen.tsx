@@ -28,7 +28,7 @@ const UserDataCard = ({ icon, title, value }: { icon: string; title: string; val
   return (
     <View style={styles.dataCard}>
       <View style={styles.iconContainer}>
-        <Ionicons name={icon as any} size={24} color="#2563eb" />
+        <Ionicons name={icon as any} size={24} color="#ffff" />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.dataTitle}>{title}</Text>
@@ -94,9 +94,9 @@ const QuickAction = ({ icon, title, onPress }: { icon: string; title: string; on
         onPress={onPress}
         activeOpacity={0.8}
       >
-        <Ionicons name={icon as any} size={20} color="#fff" />
+        <Ionicons name={icon as any} size={20} color="#ffff" />
         <Text style={styles.quickActionText}>{title}</Text>
-        <Ionicons name="chevron-forward" size={16} color="#fff" />
+        <Ionicons name="chevron-forward" size={16} color="#ffff" />
       </TouchableOpacity>
     </Animated.View>
   );
@@ -133,12 +133,12 @@ export default function HomeScreen() {
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Ionicons name="person-circle" size={45} color="#2563eb" />
+          <Ionicons name="person-circle" size={45} color="#ffff" />
           <View style={styles.headerText}>
             <View style={styles.greetingRow}>
               <Text style={styles.greeting}>Welcome, Abel</Text>
               <Animated.View style={{ transform: [{ rotate: spin }] }}>
-                <Ionicons name="refresh" size={20} color="#fff" />
+                <Ionicons name="refresh" size={20} color="#ffff" />
               </Animated.View>
             </View>
             <Text style={styles.subtitle}>Your health dashboard</Text>
@@ -185,10 +185,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
     padding: 12,
-    backgroundColor: 'rgba(108, 117, 125, 0.8)', // Glassy grey background
+    backgroundColor: 'rgba(3, 65, 200, 0.9)', // Blue background
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: 'rgba(108, 117, 125, 0.3)', // Glassy grey border
+    borderColor: 'rgba(3, 65, 200, 0.3)', // Blue border
   },
   headerText: {
     marginLeft: 16,
@@ -215,14 +215,14 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   dataCard: {
-    backgroundColor: 'rgba(108, 117, 125, 0.8)', // Glassy grey background
+    backgroundColor: 'rgba(3, 65, 200, 0.9)', // Blue background
     borderRadius: 18,
     padding: 8,
     alignItems: 'center',
     width: '48%',
     marginBottom: 12,
     borderWidth: 2,
-    borderColor: 'rgba(108, 117, 125, 0.3)', // Glassy grey border
+    borderColor: 'rgba(3, 65, 200, 0.3)', // Blue border
   },
   iconContainer: {
     position: 'absolute',
@@ -237,14 +237,14 @@ const styles = StyleSheet.create({
   },
   dataTitle: {
     fontSize: 8,
-    color: '#666',
+    color: '#fff',
     marginTop: 8,
     textAlign: 'center',
   },
   dataValue: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#2563eb',
+    color: '#fff',
     marginTop: 4,
     textAlign: 'center',
   },
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   quickAction: {
-    backgroundColor: 'rgba(108, 117, 125, 0.8)', // Glassy grey background
+    backgroundColor: 'rgba(3, 65, 200, 0.9)', // Blue background
     borderRadius: 20, // Increased border radius for bigger appearance
     padding: 16, // Increased padding for bigger buttons
     flexDirection: 'row',
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 14, // Increased margin for better spacing
     borderWidth: 1,
-    borderColor: 'rgba(108, 117, 125, 0.3)', // Glassy grey border
+    borderColor: 'rgba(3, 65, 200, 0.3)', // Blue border
   },
   quickActionText: {
     fontSize: 10,
